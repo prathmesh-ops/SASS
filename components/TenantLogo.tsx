@@ -4,9 +4,17 @@ import React from "react";
 import { Shield } from "lucide-react";
 import { useTenant } from "./TenantProvider";
 
-export default function TenantLogo({ size = 40, showName = true }: { size?: number; showName?: boolean }) {
+export default function TenantLogo({
+  size = 40,
+  showName = true,
+}: {
+  size?: number;
+  showName?: boolean;
+}) {
   const { branding } = useTenant();
-  const bgStyle = { backgroundColor: branding.primaryColor } as React.CSSProperties;
+  const bgStyle = {
+    backgroundColor: branding.primaryColor,
+  } as React.CSSProperties;
 
   return (
     <div className="flex items-center space-x-2">
@@ -24,10 +32,17 @@ export default function TenantLogo({ size = 40, showName = true }: { size?: numb
           className="rounded-lg flex items-center justify-center"
           style={{ width: size, height: size, ...bgStyle }}
         >
-          <Shield className="text-white" style={{ width: size * 0.6, height: size * 0.6 }} />
+          <Shield
+            className="text-white"
+            style={{ width: size * 0.6, height: size * 0.6 }}
+          />
         </div>
       )}
-      {showName && <span className="text-xl font-bold text-white">{branding.tenantName}</span>}
+      {showName && (
+        <span className="text-xl font-bold text-white">
+          {branding.tenantName}
+        </span>
+      )}
     </div>
   );
 }
