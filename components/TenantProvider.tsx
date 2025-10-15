@@ -30,13 +30,27 @@ const defaultBranding: Branding = {
   secondaryColor: "#111827",
   accentColor: "#22C55E",
   logoUrl: null,
-  customCSS: ""
+  customCSS: "",
 };
 
 const defaultLayout: LayoutConfig = {
-  adminDashboardWidgets: ["stats", "weekly-activity", "top-agents", "recent-activity", "quick-stats", "system-status"],
-  agentDashboardWidgets: ["stats", "quick-verify", "quick-actions", "activity-chart", "recent-activity", "compliance-status"],
-  customNav: undefined
+  adminDashboardWidgets: [
+    "stats",
+    "weekly-activity",
+    "top-agents",
+    "recent-activity",
+    "quick-stats",
+    "system-status",
+  ],
+  agentDashboardWidgets: [
+    "stats",
+    "quick-verify",
+    "quick-actions",
+    "activity-chart",
+    "recent-activity",
+    "compliance-status",
+  ],
+  customNav: undefined,
 };
 
 const TenantContext = createContext<TenantState | undefined>(undefined);
@@ -45,15 +59,24 @@ export function TenantProvider({ children }: { children: React.ReactNode }) {
   const [branding, updateBranding] = useState<Branding>(defaultBranding);
   const [layout, updateLayout] = useState<LayoutConfig>(defaultLayout);
 
-  const setBranding = (b: Partial<Branding>) => updateBranding(prev => ({ ...prev, ...b }));
-  const setLayout = (l: Partial<LayoutConfig>) => updateLayout(prev => ({ ...prev, ...l }));
+  const setBranding = (b: Partial<Branding>) =>
+    updateBranding((prev) => ({ ...prev, ...b }));
+  const setLayout = (l: Partial<LayoutConfig>) =>
+    updateLayout((prev) => ({ ...prev, ...l }));
 
-  const value = useMemo(() => ({ branding, layout, setBranding, setLayout }), [branding, layout]);
+  const value = useMemo(
+    () => ({ branding, layout, setBranding, setLayout }),
+    [branding, layout]
+  );
 
   return (
     <TenantContext.Provider value={value}>
       {/* CSS variables for theming */}
-      <style suppressHydrationWarning>{`:root{--brand-primary:${branding.primaryColor};--brand-secondary:${branding.secondaryColor};--brand-accent:${branding.accentColor};}${branding.customCSS || ""}`}</style>
+      <style suppressHydrationWarning>{`:root{--brand-primary:${
+        branding.primaryColor
+      };--brand-secondary:${branding.secondaryColor};--brand-accent:${
+        branding.accentColor
+      };}${branding.customCSS || ""}`}</style>
       {children}
     </TenantContext.Provider>
   );
